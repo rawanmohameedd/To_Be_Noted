@@ -21,7 +21,7 @@ export const createTask = async (req: Request, res: Response): Promise<void> => 
     const task = await Task.create(validatedData);
     res.status(201).json(task);
   } catch (error) {
-    res.status(400).json({ message: error });
+    res.status(400).json({message: (error as Error).message });
   }
 };
 
@@ -34,7 +34,7 @@ export const getTask = async (req: Request, res: Response): Promise<void> => {
     }
     res.json(task);
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: (error as Error).message });
   }
 };
 
@@ -62,7 +62,7 @@ export const updateTask = async (req: Request, res: Response): Promise<void> => 
 
     res.json(task);
   } catch (error) {
-    res.status(400).json({ message: error });
+    res.status(400).json({ message: (error as Error).message });
   }
 };
 
@@ -75,7 +75,7 @@ export const deleteTask = async (req: Request, res: Response): Promise<void> => 
     }
     res.json({ message: 'Task deleted successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: (error as Error).message });
   }
 };
 
@@ -92,6 +92,6 @@ export const getUserTasks = async (req: Request, res: Response): Promise<void> =
 
     res.json(tasks);
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: (error as Error).message });
   }
 };
