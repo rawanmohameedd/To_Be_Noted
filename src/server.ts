@@ -2,8 +2,9 @@ import express from "express"
 import cors from "cors"
 import * as dotenv from "dotenv"; 
 import connectDB from "./config/db";
-import authRoutes from "./routes/auth.routes";
 
+import taskRoutes from "./routes/tasks.routes";
+import authRoutes from "./routes/auth.routes";
 dotenv.config(); 
 
 // Initialize Express app
@@ -16,7 +17,7 @@ app.use(express.json());
 
 // Routes
 app.use("/auth", authRoutes);
-
+app.use("/api", taskRoutes)
 // Connect to database
 connectDB()
   .then(() => {
