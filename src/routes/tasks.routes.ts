@@ -7,7 +7,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /tasks:
+ * /api/tasks:
  *   post:
  *     summary: Create a new task
  *     security:
@@ -50,7 +50,7 @@ router.post('/tasks', authenticateUser, authorizeRoles(['admin', 'manager']), cr
 
 /**
  * @swagger
- * /tasks/{id}:
+ * /api/tasks/{id}:
  *   get:
  *     summary: Get a task by ID
  *     security:
@@ -75,7 +75,7 @@ router.get('/tasks/:id', authenticateUser, getTask);
 
 /**
  * @swagger
- * /tasks/{id}:
+ * /api/tasks/{id}:
  *   put:
  *     summary: Update a task
  *     security:
@@ -124,7 +124,7 @@ router.put('/tasks/:id', authenticateUser, authorizeRoles(['admin', 'manager']),
 
 /**
  * @swagger
- * /tasks/{id}:
+ * /api/tasks/{id}:
  *   delete:
  *     summary: Delete a task
  *     security:
@@ -149,7 +149,7 @@ router.delete('/tasks/:id', authenticateUser, authorizeRoles(['admin']), deleteT
 
 /**
  * @swagger
- * /tasks/user/{userId}:
+ * /api/tasks/user/{userId}:
  *   get:
  *     summary: Get tasks assigned to a user
  *     security:
