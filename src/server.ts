@@ -2,15 +2,30 @@ import express from "express"
 import cors from "cors"
 import * as dotenv from "dotenv"; 
 import connectDB from "./config/db";
+import authRoutes from "./routes/auth.routes";
 
 dotenv.config(); 
 
-const app = express()
+// Initialize Express app
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use(cors())
-app.use(express.json())
+// Middleware
+app.use(cors());
+app.use(express.json());
 
-app.listen(process.env.PORT , ()=> {
-    console.log(`Server is running on port: ${process.env.PORT}`)
-})
+// Routes
+app.use("/auth", authRoutes);
+
+// Connect to database
 connectDB()
+  .then(() => {
+    // Start server after successful DB connection
+    app.listen(PORT, () => {
+      console.log(`Server is running on port: ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Database connection failed:", err);
+    process.exit(1);
+  });
