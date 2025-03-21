@@ -4,6 +4,7 @@ import * as dotenv from "dotenv";
 import connectDB from "./config/db";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
+import { setupSwagger } from "./utils/swagger";
 
 import taskRoutes from "./routes/tasks.routes";
 import authRoutes from "./routes/auth.routes";
@@ -12,6 +13,9 @@ dotenv.config();
 // Initialize Express app
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+//setUp swagger
+setupSwagger(app)
 
 // Middleware
 app.use(helmet()) // sets secures http headers

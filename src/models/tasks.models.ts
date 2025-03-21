@@ -1,5 +1,45 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Task:
+ *       type: object
+ *       required:
+ *         - title
+ *       properties:
+ *         _id:
+ *           type: string
+ *           description: Auto-generated ID
+ *         title:
+ *           type: string
+ *           description: Task title
+ *         description:
+ *           type: string
+ *           description: Task description
+ *         status:
+ *           type: string
+ *           enum: [pending, in-progress, completed]
+ *           default: pending
+ *         priority:
+ *           type: string
+ *           enum: [low, medium, high]
+ *           default: medium
+ *         dueDate:
+ *           type: string
+ *           format: date
+ *         assignedUsers:
+ *           type: array
+ *           items:
+ *             type: string
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ */
 export interface ITask extends Document {
     title: string;
     description: string;

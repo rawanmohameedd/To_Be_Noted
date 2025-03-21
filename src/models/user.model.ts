@@ -1,6 +1,43 @@
 import mongoose, { Schema, Document } from "mongoose";
 import bcrypt from "bcryptjs";
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - username
+ *         - email
+ *         - password
+ *       properties:
+ *         _id:
+ *           type: string
+ *           description: Auto-generated ID
+ *         username:
+ *           type: string
+ *           description: The username of the user
+ *         email:
+ *           type: string
+ *           description: The email address of the user
+ *         password:
+ *           type: string
+ *           description: The hashed password of the user
+ *         role:
+ *           type: string
+ *           enum: [admin, manager, user]
+ *           default: user
+ *           description: The role of the user
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: Auto-generated creation timestamp
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           description: Auto-generated update timestamp
+ */
 export interface IUser extends Document {
   username: string;
   email: string;
