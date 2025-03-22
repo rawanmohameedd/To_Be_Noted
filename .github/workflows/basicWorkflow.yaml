@@ -32,6 +32,7 @@ jobs:
           exit 1
   job4:
     name: "goodbye"
+    if: always()
     needs: 
     - job2
     - job3
