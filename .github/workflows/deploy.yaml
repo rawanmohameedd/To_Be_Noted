@@ -1,4 +1,4 @@
-name: Deploy to Heroku and Docker Hub
+name: Deploy to Vercel and Docker Hub
 
 on:
   push:
@@ -39,15 +39,11 @@ jobs:
           docker tag to_be_noted rawanmohameedd/to_be_noted:latest
           docker push rawanmohameedd/to_be_noted:latest
 
-      - name: Install Heroku CLI
-        run: curl https://cli-assets.heroku.com/install.sh | sh
+      - name: Install Vercel CLI
+        run: npm install -g vercel
 
-      - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: my-heroku-app
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          usedocker: true
-          docker_build_args: "-t to_be_noted"
-          dontautocreate: false
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          vercel --prod --token $VERCEL_TOKEN
