@@ -45,5 +45,5 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: my-heroku-app
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          docker: true
+          usedocker: true
           docker_build_args: "-t to_be_noted"
