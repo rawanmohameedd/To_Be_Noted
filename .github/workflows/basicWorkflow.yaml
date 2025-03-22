@@ -1,7 +1,6 @@
 name: basic workflow
 on:
-  push:
-
+  workflow_dispatch:
 jobs:
   job1:
     name: "greet"
