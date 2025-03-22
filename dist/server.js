@@ -71,3 +71,4 @@ app.use("/api", tasks_routes_1.default);
     console.error("Database connection failed:", err);
     process.exit(1);
 });
+exports.default = app;
