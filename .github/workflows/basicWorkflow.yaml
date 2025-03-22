@@ -1,26 +1,43 @@
 name: basic workflow
 on:
-  workflow_dispatch:
-    inputs:
-      name:
-        default: 'world'
-        required: true
-        type: string
-        description: 'The name to greet'
-
-      city:
-        default: 'cairo'
-        required: true
-        type: string
-        description: 'city greeted person lives in'
+  push:
 
 jobs:
-  greet:
+  job1:
     name: "greet"
     runs-on: ubuntu-latest
     steps:
       - name: Run a one-line script
         run: |
           echo Hello ${{ inputs.name }} from ${{ inputs.city }}
-        
-     
+  job2:
+    name: "greet2"
+    needs: 
+    - job1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a one-line script
+        run: |
+          echo Hello ${{ inputs.name }} from ${{ inputs.city }}
+
+  job3:
+    name: "greet3"
+    needs: 
+    - job1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a one-line script
+        run: |
+          echo Hello ${{ inputs.name }} from ${{ inputs.city }}
+  job4:
+    name: "goodbye"
+    needs: 
+    - job2
+    - job3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a one-line script
+        run: |
+          echo Goodbye ${{ inputs.name }} from ${{ inputs.city }}
+          echo Hello world from cairo
+          echo Goodbye world from cairo
