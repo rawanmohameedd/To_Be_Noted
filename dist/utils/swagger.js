@@ -23,11 +23,9 @@ const options = {
                 },
             },
         },
-        security: [{
-                bearerAuth: [],
-            }],
+        security: [{ bearerAuth: [] }],
     },
-    apis: ['./dist/routes/*.js', './dist/models/*.js'], // Point to compiled JavaScript files
+    apis: ['./dist/routes/*.js', './dist/models/*.js'], // Ensure all relevant files are included
 };
 const swaggerSpec = (0, swagger_jsdoc_1.default)(options);
 const setupSwagger = (app) => {
@@ -37,6 +35,10 @@ const setupSwagger = (app) => {
     app.get('/api-docs.json', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(swaggerSpec);
+    });
+    // Debug route to inspect Swagger JSON
+    app.get('/debug-swagger-json', (req, res) => {
+        res.json(swaggerSpec);
     });
     console.log('Swagger docs available at /api-docs');
 };
