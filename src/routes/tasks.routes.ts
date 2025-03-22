@@ -1,7 +1,7 @@
 import express from 'express';
 import { authenticateUser } from '../middleware/auth.middleware';
 import { authorizeRoles } from '../middleware/rbac.middleware';
-import { createTask, getTask, updateTask, deleteTask, getUserTasks } from '../controllers/tasks.controller';
+import { createTask, getTask, updateTask, deleteTask, getUserTasks, getTaskHistory } from '../controllers/tasks.controller';
 
 const router = express.Router();
 
@@ -189,5 +189,28 @@ router.delete('/tasks/:id', authenticateUser, authorizeRoles(['admin']), deleteT
  *         description: Unauthorized
  */
 router.get('/tasks/user/:userId', authenticateUser, getUserTasks);
+
+/**
+* @swagger
+* /api/tasks/history/{id}:
+*   get:
+*     summary: Get task history
+*     security:
+*       - bearerAuth: []
+*     tags: [Tasks]
+*     parameters:
+*       - in: path
+*         name: id
+*         schema:
+*           type: string
+*         required: true
+*         description: Task ID
+*     responses:
+*       200:
+*         description: Task history
+*       401:
+*         description: Unauthorized
+*/
+router.get('/tasks/history/:id', authenticateUser, authorizeRoles(['admin', 'manager']), getTaskHistory);
 
 export default router;

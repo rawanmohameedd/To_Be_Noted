@@ -119,3 +119,34 @@ export const getUserTasks = async (req: Request, res: Response) => {
   }
 };
 
+export const getTaskHistory = async (req: Request, res: Response) => {
+  try {
+    const taskId = req.params.id;
+    
+    const history = await TaskHistory.aggregate([
+      { $match: { taskId: new mongoose.Types.ObjectId(taskId) } },
+      { $sort: { timestamp: -1 } }, // Sort by most recent change
+      {
+        $lookup: { // fetch user details
+          from: "users",
+          localField: "updatedBy",
+          foreignField: "_id",
+          as: "updatedByUser",
+        },
+      },
+      //TODO: return who interacted with the task will be added later
+      { // return an array with the selcted field
+        $project: {
+          oldStatus: 1,
+          newStatus: 1,
+          timestamp: 1,
+          updatedByUser: { _id: 1, name: 1, email: 1 },
+        },
+      },
+    ]);
+
+    res.json(history);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
