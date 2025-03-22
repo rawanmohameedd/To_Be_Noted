@@ -1,0 +1,26 @@
+name: basic workflow
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        default: 'world'
+        required: true
+        type: string
+        description: 'The name to greet'
+
+      city:
+        default: 'cairo'
+        required: true
+        type: string
+        description: 'city greeted person lives in'
+
+jobs:
+  greet:
+    name: "greet"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a one-line script
+        run: |
+          echo Hello ${{ inputs.name }} from ${{ inputs.city }}
+        
+     
