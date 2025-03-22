@@ -25,7 +25,7 @@ const options = {
         },
         security: [{ bearerAuth: [] }],
     },
-    apis: ['./dist/routes/*.js', './src/models/*.ts'], // Ensure all relevant files are included
+    apis: ['./dist/routes/*.js', './dist/models/*.js'], // Ensure all relevant files are included
 };
 const swaggerSpec = (0, swagger_jsdoc_1.default)(options);
 const setupSwagger = (app) => {
