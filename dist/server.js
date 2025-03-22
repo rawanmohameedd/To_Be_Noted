@@ -56,9 +56,18 @@ app.use((0, helmet_1.default)()); // sets secures http headers
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use((0, express_rate_limit_1.default)({ windowMs: 15 * 60 * 1000, max: 100 })); // 100 request for every 15 min.
+//specify allowed origins
+app.use((0, cors_1.default)({
+    origin: 'https://to-be-noted.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
 // Routes
 app.use("/auth", auth_routes_1.default);
 app.use("/api", tasks_routes_1.default);
+app.get('/', (req, res) => {
+    res.send('Hello World');
+});
 // Connect to database
 (0, db_1.default)()
     .then(() => {

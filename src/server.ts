@@ -23,9 +23,21 @@ app.use(cors());
 app.use(express.json());
 app.use(rateLimit({windowMs: 15*60*1000, max: 100})) // 100 request for every 15 min.
 
+//specify allowed origins
+app.use(cors({
+  origin: 'https://to-be-noted.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 // Routes
 app.use("/auth", authRoutes);
 app.use("/api", taskRoutes)
+
+
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
 
 // Connect to database
 connectDB()
