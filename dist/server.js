@@ -51,7 +51,6 @@ const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
 app.set('trust proxy', 1);
 //setUp swagger
-(0, swagger_1.setupSwagger)(app);
 // Middleware
 app.use((0, helmet_1.default)()); // sets secures http headers
 app.use((0, cors_1.default)());
@@ -63,6 +62,7 @@ app.use((0, cors_1.default)({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
+(0, swagger_1.setupSwagger)(app);
 // Routes
 app.use("/auth", auth_routes_1.default);
 app.use("/api", tasks_routes_1.default);

@@ -17,7 +17,6 @@ const PORT = process.env.PORT || 3000;
 app.set('trust proxy', 1);
 
 //setUp swagger
-setupSwagger(app)
 
 // Middleware
 app.use(helmet()) // sets secures http headers
@@ -32,6 +31,7 @@ app.use(cors({
   credentials: true
 }));
 
+setupSwagger(app)
 // Routes
 app.use("/auth", authRoutes);
 app.use("/api", taskRoutes)
