@@ -11,7 +11,7 @@ const createTaskSchema = z.object({
   description: z.string().optional(),
   status: z.enum(['pending', 'in-progress', 'completed']).optional(),
   priority: z.enum(['low', 'medium', 'high']).optional(),
-  dueDate: z.string().optional(),
+  dueDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format, must be YYYY-MM-DD").optional(),
   assignedUsers: z.array(z.string()).optional(),
 });
 
