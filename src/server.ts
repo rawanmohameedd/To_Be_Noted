@@ -41,6 +41,19 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
+app.get('/debug-swagger-ui-bundle', (req, res) => {
+  res.send('This should be the swagger-ui-bundle.js file');
+});
+
+app.get('/debug-headers', (req, res) => {
+  res.json({
+    headers: req.headers,
+    path: req.path,
+    baseUrl: req.baseUrl,
+    originalUrl: req.originalUrl
+  });
+});
+
 // Connect to database
 connectDB()
   .then(() => {
