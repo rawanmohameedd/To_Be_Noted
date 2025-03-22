@@ -29,6 +29,7 @@ jobs:
       - name: Run a one-line script
         run: |
           echo Hello ${{ inputs.name }} from ${{ inputs.city }}
+          exit 1
   job4:
     name: "goodbye"
     needs: 
