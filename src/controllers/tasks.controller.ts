@@ -74,7 +74,14 @@ export const deleteTask = async (req: Request, res: Response): Promise<void> => 
       res.status(404).json({ message: 'Task not found' });
       return;
     }
-    res.json({ message: 'Task deleted successfully' });
+
+    // Delete associated task history
+    await TaskHistory.deleteMany({ taskId: task._id });
+
+    // Delete associated comments
+    await TaskComment.deleteMany({ taskId: task._id });
+
+    res.json({ message: 'Task and associated data deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   }
