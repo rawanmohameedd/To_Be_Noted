@@ -50,8 +50,8 @@ export interface ITaskHistory extends Document {
 
 const TaskHistorySchema: Schema<ITaskHistory> = new Schema(
   {
-    taskId: { type: mongoose.Schema.Types.ObjectId, ref: "Task", required: true },
-    updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    taskId: { type: mongoose.Schema.Types.ObjectId, ref: "Task", required: true , index: true },
+    updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index:true },
     oldStatus: { type: String, required: true },
     newStatus: { type: String, required: true },
     timestamp: { type: Date, default: Date.now },

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { Task } from '../models/tasks.models';
 import { TaskHistory } from '../models/tasksHistoy.models';
 import { z } from 'zod';
+import mongoose from 'mongoose';
 
 // validate input for create and update task
 const createTaskSchema = z.object({
@@ -79,19 +80,42 @@ export const deleteTask = async (req: Request, res: Response): Promise<void> => 
   }
 };
 
-export const getUserTasks = async (req: Request, res: Response): Promise<void> => {
+export const getUserTasks = async (req: Request, res: Response) => {
   try {
     const { status, dueDate, page = 1, limit = 10 } = req.query;
-    const filters: any = { assignedUsers: req.params.userId };
-    if (status) filters.status = status;
-    if (dueDate) filters.dueDate = { $lte: new Date(dueDate as string) };
+    const userId = req.params.userId;
 
-    const tasks = await Task.find(filters)
-      .limit(Number(limit))
-      .skip((Number(page) - 1) * Number(limit));
+    const matchStage: any = { assignedUsers: new mongoose.Types.ObjectId(userId) };
+    if (status) matchStage.status = status;
+    if (dueDate) matchStage.dueDate = { $lte: new Date(dueDate as string) };
+
+    const tasks = await Task.aggregate([
+      { $match: matchStage },
+      { $sort: { dueDate: -1 } }, // Sort by due date (latest first)
+      { $skip: (Number(page) - 1) * Number(limit) },
+      { $limit: Number(limit) },
+      {
+        $lookup: {
+          from: "users",
+          localField: "assignedUsers",
+          foreignField: "_id",
+          as: "assignedUsersDetails",
+        },
+      },
+      {
+        $project: {
+          title: 1,
+          description: 1,
+          status: 1,
+          dueDate: 1,
+          assignedUsersDetails: { _id: 1, name: 1, email: 1 },
+        },
+      },
+    ]);
 
     res.json(tasks);
   } catch (error) {
-    res.status(500).json({ message: (error as Error).message });
+    res.status(500).json({ message: "Server error" });
   }
 };
+

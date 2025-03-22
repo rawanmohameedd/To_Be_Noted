@@ -51,11 +51,11 @@ export interface ITask extends Document {
   
   const TaskSchema: Schema<ITask> = new Schema(
     {
-      title: { type: String, required: true },
+      title: { type: String, required: true , index: true }, //index for searching
       description: { type: String },
-      status: { type: String, enum: ["pending", "in-progress", "completed"], default: "pending" },
+      status: { type: String, enum: ["pending", "in-progress", "completed"], default: "pending" , index: true}, //index for filtering
       priority: { type: String, enum: ["low", "medium", "high"], default: "medium" },
-      dueDate: { type: Date },
+      dueDate: { type: Date , index: true }, //index for sorting and filtering
       assignedUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     },
     { timestamps: true }
