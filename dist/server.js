@@ -43,6 +43,7 @@ const db_1 = __importDefault(require("./config/db"));
 const helmet_1 = __importDefault(require("helmet"));
 const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 const swagger_1 = require("./utils/swagger");
+const path_1 = __importDefault(require("path"));
 const tasks_routes_1 = __importDefault(require("./routes/tasks.routes"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 dotenv.config();
@@ -62,6 +63,8 @@ app.use((0, cors_1.default)({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
+// Serve Swagger UI assets
+app.use('/swagger-ui', express_1.default.static(path_1.default.join(__dirname, '../node_modules/swagger-ui-dist')));
 (0, swagger_1.setupSwagger)(app);
 // Routes
 app.use("/auth", auth_routes_1.default);

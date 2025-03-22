@@ -5,6 +5,7 @@ import connectDB from "./config/db";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { setupSwagger } from "./utils/swagger";
+import path from "path";
 
 import taskRoutes from "./routes/tasks.routes";
 import authRoutes from "./routes/auth.routes";
@@ -30,6 +31,9 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
+
+// Serve Swagger UI assets
+app.use('/swagger-ui', express.static(path.join(__dirname, '../node_modules/swagger-ui-dist')));
 
 setupSwagger(app)
 // Routes
