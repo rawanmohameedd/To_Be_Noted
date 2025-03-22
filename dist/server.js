@@ -49,6 +49,7 @@ dotenv.config();
 // Initialize Express app
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
+app.set('trust proxy', 1);
 //setUp swagger
 (0, swagger_1.setupSwagger)(app);
 // Middleware
