@@ -23,7 +23,7 @@ const options: swaggerJSDoc.Options = {
       bearerAuth: [],
     }],
   },
-  apis: ['./src/routes/*.ts', './src/models/*.ts'], // Use source files for Swagger docs
+  apis: ['./dist/routes/*.js', './dist/models/*.js'], // Point to compiled JavaScript files
 };
 
 const swaggerSpec = swaggerJSDoc(options);
