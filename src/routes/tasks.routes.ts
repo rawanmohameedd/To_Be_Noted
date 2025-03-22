@@ -1,7 +1,7 @@
 import express from 'express';
 import { authenticateUser } from '../middleware/auth.middleware';
 import { authorizeRoles } from '../middleware/rbac.middleware';
-import { createTask, getTask, updateTask, deleteTask, getUserTasks, getTaskHistory } from '../controllers/tasks.controller';
+import { createTask, getTask, updateTask, deleteTask, getUserTasks, getTaskHistory, addTaskComment } from '../controllers/tasks.controller';
 
 const router = express.Router();
 
@@ -189,6 +189,42 @@ router.delete('/tasks/:id', authenticateUser, authorizeRoles(['admin']), deleteT
  *         description: Unauthorized
  */
 router.get('/tasks/user/:userId', authenticateUser, getUserTasks);
+
+/**
+ * @swagger
+ * /api/tasks/{id}/comments:
+ *   post:
+ *     summary: Add a comment to a task
+ *     security:
+ *       - bearerAuth: []
+ *     tags: [Tasks]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Task ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - comment
+ *             properties:
+ *               comment:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Comment added successfully
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+*/
+router.post('/tasks/:id/comments', authenticateUser, addTaskComment);
 
 /**
 * @swagger
